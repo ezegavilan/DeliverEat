@@ -1,0 +1,81 @@
+h1 {
+    color: var(--color-primary-400);
+}
+
+.title {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title h1 {
+    font-family: 'Arvo', sans-serif;
+}
+
+.summary {
+    padding: 0 96px;
+}
+
+.summary-item {
+    width: 50%;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 84px;
+}
+
+.summary-item .item-description {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.summary-item .item-description .img {
+    border: 1px solid black;
+    width: 60px;
+    height: 60px;
+}
+
+.location-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.delivery-time {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card {
+    border: 1px solid black;
+    border-radius: 6px;
+    background: white;
+    width: 320px;
+    height: 380px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover,
+.card:active,
+.card.selected {
+    background: var(--color-primary-400);
+    color: white;
+}
+
+.card p {
+    font-family: 'Arvo', sans-serif;
+}
+
+.card .schedule-order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+

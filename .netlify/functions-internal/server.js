@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,9 +35,17 @@ var require_dist = __commonJS({
   }
 });
 
-// <stdin>
-var stdin_exports = {};
-__export(stdin_exports, {
+// server.js
+var server_exports = {};
+__export(server_exports, {
+  handler: () => handler
+});
+module.exports = __toCommonJS(server_exports);
+var import_netlify = require("@remix-run/netlify");
+
+// server-entry-module:@remix-run/dev/server-build
+var server_build_exports = {};
+__export(server_build_exports, {
   assets: () => assets_manifest_default,
   assetsBuildDirectory: () => assetsBuildDirectory,
   entry: () => entry,
@@ -44,7 +53,6 @@ __export(stdin_exports, {
   publicPath: () => publicPath,
   routes: () => routes
 });
-module.exports = __toCommonJS(stdin_exports);
 
 // app/entry.server.tsx
 var entry_server_exports = {};
@@ -311,14 +319,15 @@ var assetsBuildDirectory = "public/build", future = { v2_dev: !1, unstable_postc
     module: routes_exports
   }
 };
+
+// server.js
+var handler = (0, import_netlify.createRequestHandler)({
+  build: server_build_exports,
+  mode: "production"
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  assets,
-  assetsBuildDirectory,
-  entry,
-  future,
-  publicPath,
-  routes
+  handler
 });
 /*! Bundled license information:
 

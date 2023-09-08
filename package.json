@@ -8,6 +8,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@netlify/functions": "^1.0.0",
+    "@remix-run/netlify": "1.19.3",
     "@material-tailwind/react": "^2.1.1",
     "@remix-run/css-bundle": "^1.19.3",
     "@remix-run/node": "^1.19.3",

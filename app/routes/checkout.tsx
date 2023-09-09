@@ -1,5 +1,5 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { Stepper, Step } from "@material-tailwind/react";
+import { Stepper, Step, Button } from "@material-tailwind/react";
 
 import checkoutStyles from '~/styles/checkout.css';
 import { useState } from "react";
@@ -25,18 +25,28 @@ export default function CheckoutPage() {
             <section className="summary mt-12">
                 <div className="summary-item">
                     <span className="item-description">
-                        <p className="img"></p>
-                        <p>Item 1</p>
+                        <span className="img">
+                            <img src="/img/burger-1.png" alt="burger-1" />
+                        </span>
+                        <div className="item-name">
+                            <p>Burger Premium</p>
+                            <p className="units">x1</p>
+                        </div>
                     </span>
                     <span><p>$ 3.500</p></span>
                 </div>
 
                 <div className="summary-item">
                     <span className="item-description">
-                        <p className="img"></p>
-                        <p>Item 2</p>
+                        <span className="img">
+                            <img src="/img/burger-2.png" alt="lomito-1" />
+                        </span>
+                        <div className="item-name">
+                            <p>Burger XL</p>
+                            <p className="units">x1</p>
+                        </div>
                     </span>
-                    <span><p>$ 2.000</p></span>
+                    <span><p>$ 2.500</p></span>
                 </div>
             </section>
 
@@ -52,7 +62,13 @@ export default function CheckoutPage() {
 
 export function StepperWithContent() {
     const [activeStep, setActiveStep] = useState(0);
+    const [isLastStep] = useState(false);
+    const [isFirstStep] = useState(false);
     const [selected, setSelected] = useState('sooner');
+
+    const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+
 
     const handleSelectCard = (card: string) => {
         setSelected(card);
@@ -60,22 +76,22 @@ export function StepperWithContent() {
 
     return (
         <div className="w-full px-24 py-4">
-            <Stepper
+            <Stepper activeLineClassName="!bg-delivereat-secondary"
                 activeStep={activeStep}
             >
-                <Step onClick={() => setActiveStep(0)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(0)}>
                     1
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
                 </Step>
 
-                <Step onClick={() => setActiveStep(1)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(1)}>
                     2
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
                 </Step>
 
-                <Step onClick={() => setActiveStep(2)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(2)}>
                     3
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
@@ -93,8 +109,8 @@ export function StepperWithContent() {
                                 </svg>
 
                             </div>
-                            <select id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Seleccioná tu ciudad">
-                                <option value="default" selected>Seleccioná tu ciudad</option>
+                            <select defaultValue={"default"} id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Seleccioná tu ciudad">
+                                <option value="default">Seleccioná tu ciudad</option>
                                 <option value="Córdoba">Córdoba</option>
                                 <option value="Villa María">Villa María</option>
                                 <option value="Río Cuarto">Río Cuarto</option>
@@ -150,6 +166,15 @@ export function StepperWithContent() {
                     </div>
                 )
             }
+
+            <div className="mt-16 flex justify-between">
+                <Button onClick={handlePrev} disabled={isFirstStep}>
+                    Prev
+                </Button>
+                <Button onClick={handleNext} disabled={isLastStep}>
+                    Next
+                </Button>
+            </div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 h1 {
-    color: var(--color-primary-400);
+    color: var(--color-primary);
 }
 
 .title {
@@ -34,8 +34,24 @@ h1 {
 
 .summary-item .item-description .img {
     border: 1px solid black;
+    border-radius: 6px;
     width: 60px;
     height: 60px;
+}
+
+.summary-item .item-description .img img {
+    vertical-align: middle;
+}
+
+.summary-item .item-description .item-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-item .item-description .item-name .units {
+    color: #a3bac3;
+    font-size: 10px;
 }
 
 .location-container {
@@ -64,8 +80,8 @@ h1 {
 .card:hover,
 .card:active,
 .card.selected {
-    background: var(--color-primary-400);
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-light);
 }
 
 .card p {
@@ -79,3 +95,6 @@ h1 {
     gap: 36px;
 }
 
+.bg-blue-gray-50 {
+    color: "#01a7c2" !important;
+}

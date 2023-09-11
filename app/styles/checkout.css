@@ -95,6 +95,52 @@ h1 {
     gap: 36px;
 }
 
-.bg-blue-gray-50 {
-    color: "#01a7c2" !important;
+.payment-container {
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.payment-container .payment {
+    width: 75%;
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.payment-container .payment .payment-method {
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.payment-container .payment .payment-method span p {
+    font-family: 'Arvo', sans-serif;
+}
+
+.payment-container .payment-amount {
+    width: 25%;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+.payment-container .payment-amount span p {
+    font-family: 'Arvo', sans-serif;
+}
+
+.payment-container .payment-amount .separator {
+    border: 1px dashed var(--color-light);
+}
+
+.payment-container .payment-amount .amount-info span {
+    padding: 3px;
+}
+
+.payment-container .payment-amount .amount-info span p {
+    font-size: 24px;
+    font-weight: bold;
 }

@@ -2,7 +2,7 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Stepper, Step, Button } from "@material-tailwind/react";
 
 import checkoutStyles from '~/styles/checkout.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const meta: MetaFunction = () => {
     return { title: "Completá tu pedido" };
@@ -112,7 +112,7 @@ export function StepperWithContent() {
 
             {
                 activeStep === 2 && (
-                    <PayMethodStep />
+                    <PayMethodStep total={6000} />
                 )
             }
 
@@ -189,11 +189,24 @@ const DeliveryTimeStep = ({ selected, handleSelectCard }: any) => {
     )
 }
 
-const PayMethodStep = () => {
+const PayMethodStep = ({ total }: any) => {
     const [selected, setSelected] = useState('cash');
+    const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+
+    }, [amount]);
 
     const handleSelectCard = (card: string) => {
         setSelected(card);
+    }
+
+    const handleChangeAmount = (e: any) => {
+        setAmount(Number(e.target.value));
+    }
+
+    const calculateExchange = (amount: number) => {
+        return amount - total;
     }
 
     return (
@@ -224,6 +237,35 @@ const PayMethodStep = () => {
                             </span>
                             <p>VISA</p>
                         </span>
+                    </div>
+
+                    <div className="payment-details mt-5">
+                        {selected === 'cash' && (
+                            <>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+
+
+                                    </div>
+                                    <input id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-1.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="¿Con cúanto vas a abonar?" onChange={handleChangeAmount} />
+                                </div>
+
+                                {
+                                    amount > 0 && amount > total && (
+                                        <span className="amount-exchange">
+                                            <p>Tu vuelto es de $ {calculateExchange(amount)}</p>
+                                        </span>
+                                    )
+                                }
+                            </>
+                        )}
+
+                        {selected === 'visa' && (
+                            <p>VISA PAYMENT</p>
+                        )}
                     </div>
 
                 </div>

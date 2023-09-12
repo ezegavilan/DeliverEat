@@ -1,115 +1,68 @@
-import type { LinksFunction, LoaderArgs, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Stepper, Step, Button } from "@material-tailwind/react";
-
-import checkoutStyles from '~/styles/checkout.css';
-import { useEffect, useState } from "react";
-import { Outlet, useLoaderData } from "@remix-run/react";
-import { Link } from "react-router-dom";
-
-export const meta: MetaFunction = () => {
-    return { title: "Completá tu pedido" };
-}
-
-export const links: LinksFunction = () => {
-    return [{ rel: "stylesheet", href: checkoutStyles }];
-}
+import { Step, Stepper } from "@material-tailwind/react";
+import type { ActionArgs, ActionFunction, LoaderArgs, LoaderFunction } from "@remix-run/node";
+import { type NavigateFunction, useLoaderData, useNavigate, Form } from "@remix-run/react";
+import { useState } from "react";
 
 export const loader: LoaderFunction = ({ params }: LoaderArgs) => {
-    return params;
+    return params.step;
 }
 
-export default function CheckoutPage() {
-    const params = useLoaderData();
-    const isCheckoutRootPage: boolean = (params.step === undefined);
-    const [cta, setCta] = useState(isCheckoutRootPage);
+export const action: ActionFunction = ({ request }: ActionArgs) => {
+    console.log({ request });
+    return true;
+}
+
+export default function CheckoutStepsPage() {
+    const step = useLoaderData();
+    
     return (
-
-        <main className="container m-5 px-5">
-            <section className="title">
-                <h1 className=" text-xl font-bold">Completá tu pedido</h1>
-                <span className="text-sm">
-                    <p className="">| One Burger</p>
-                </span>
-            </section>
-
-            <section className="summary mt-12">
-                <div className="summary-item">
-                    <span className="item-description">
-                        <span className="img">
-                            <img src="/img/burger-1.png" alt="burger-1" />
-                        </span>
-                        <div className="item-name">
-                            <p>Burger Premium</p>
-                            <p className="units">x1</p>
-                        </div>
-                    </span>
-                    <span><p>$ 3.500</p></span>
-                </div>
-
-                <div className="summary-item">
-                    <span className="item-description">
-                        <span className="img">
-                            <img src="/img/burger-2.png" alt="lomito-1" />
-                        </span>
-                        <div className="item-name">
-                            <p>Burger XL</p>
-                            <p className="units">x1</p>
-                        </div>
-                    </span>
-                    <span><p>$ 2.500</p></span>
-                </div>
-                {
-                    (cta) && (
-                        <div className="mt-7 p-2">
-                            <Link className="cta" to={'step-1'} onClick={() => setCta(false)}>
-                                <span>Continuar</span>
-                            </Link>
-                        </div>
-
-                    )
-                }
-            </section>
-
-            <section className="location-container mt-5">
-                <Outlet />
-            </section>
-        </main>
+        <StepperWithContent step={step} />
     )
 }
 
+interface StepperProps {
+    step: string
+}
 
-export function StepperWithContent() {
-    const [activeStep, setActiveStep] = useState(0);
-    const [isLastStep] = useState(false);
-    const [isFirstStep] = useState(false);
+function StepperWithContent({ step }: StepperProps) {
+    const stepNumber: number = Number(step.split('-')[1]);
+    const [activeStep, setActiveStep] = useState(stepNumber);
+/*     const [isLastStep] = useState(false);
+    const [isFirstStep] = useState(false); */
     const [selected, setSelected] = useState('sooner');
+    const navigate: NavigateFunction = useNavigate();
 
-    const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+/*     const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+    const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1); */
 
 
     const handleSelectCard = (card: string) => {
         setSelected(card);
     }
 
+    const handleStep = (step: number) => {
+        setActiveStep(step);
+        navigate(`/checkout/step-${step}`);
+    }
+
     return (
         <div className="w-full px-24 py-4">
             <Stepper activeLineClassName="!bg-delivereat-secondary"
-                activeStep={activeStep}
+                activeStep={activeStep-1}
             >
-                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(0)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => handleStep(1)}>
                     1
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
                 </Step>
 
-                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(1)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => handleStep(2)}>
                     2
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
                 </Step>
 
-                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => setActiveStep(2)}>
+                <Step activeClassName="!bg-delivereat-primary" completedClassName="!bg-delivereat-secondary" onClick={() => handleStep(3)}>
                     3
                     <div className="absolute -bottom-[4.5rem] w-max text-center">
                     </div>
@@ -117,38 +70,38 @@ export function StepperWithContent() {
             </Stepper>
 
             {
-                activeStep === 0 && (
+                step === 'step-1' && (
                     <LocationStep />
                 )
             }
 
             {
-                activeStep === 1 && (
+                step === 'step-2' && (
                     <DeliveryTimeStep selected={selected} handleSelectCard={handleSelectCard} />
                 )
             }
 
             {
-                activeStep === 2 && (
+                step === 'step-3' && (
                     <PayMethodStep total={6000} />
                 )
             }
 
-            <div className="mt-16 flex justify-between">
+{/*             <div className="mt-16 flex justify-between">
                 <Button onClick={handlePrev} disabled={isFirstStep}>
                     Anterior
                 </Button>
                 <Button onClick={handleNext} disabled={isLastStep}>
                     Siguiente
                 </Button>
-            </div>
+            </div> */}
         </div>
     );
 }
 
 const LocationStep = () => {
     return (
-        <div className="mt-10 location">
+        <Form method="POST" className="mt-10 location">
             <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
@@ -166,17 +119,17 @@ const LocationStep = () => {
             </div>
 
             <div className="mt-5 columns-2">
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Calle" required />
+                <input type="text" id="street" name="street" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Calle" required />
 
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número" required />
+                <input type="email" id="street-number" name="street-number" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Número" required />
             </div>
 
             <div className="mt-5 columns-2">
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Depto" required />
+                <input type="text" id="depto" name="depto" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Depto" required />
 
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Referencia para cadete" required />
+                <input type="text" id="ref" name="ref" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Referencia para cadete" required />
             </div>
-        </div>
+        </Form>
     )
 }
 
@@ -210,10 +163,6 @@ const DeliveryTimeStep = ({ selected, handleSelectCard }: any) => {
 const PayMethodStep = ({ total }: any) => {
     const [selected, setSelected] = useState('cash');
     const [amount, setAmount] = useState(0);
-
-    useEffect(() => {
-
-    }, [amount]);
 
     const handleSelectCard = (card: string) => {
         setSelected(card);

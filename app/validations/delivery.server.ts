@@ -4,6 +4,7 @@ type ValidationError = {
 
 function isValidDeliveryTime(value: string) {
     if (!value) return true;
+    
     const currentDate = new Date();
     const date = new Date(value);
     const milis = date.getTime() - currentDate.getTime();

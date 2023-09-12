@@ -6,8 +6,12 @@ import { validateDeliveryTimeInput } from "~/validations/delivery.server";
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
     const formData = await request.formData();
     const deliveryTime = Object.fromEntries(formData);
+    if (deliveryTime.deliveryTime === 'skip') {
+        return redirect('/checkout/steps/step-3');
+    }
 
     try {
+        console.log({ deliveryTime });
         validateDeliveryTimeInput(deliveryTime);
     } catch (error) {
         console.error(error);
@@ -35,7 +39,10 @@ export default function DeliveryTimeStepPage() {
                 <div className={`card ${(selected !== 'sooner') ? 'selected' : ''}`} onClick={() => handleSelectCard('later')}>
                     {
                         (selected !== 'later') && (
-                            <span className="text-2xl"><p>Quiero elegir cuando</p></span>
+                            <>
+                                <span className="text-2xl"><p>Quiero elegir cuando</p></span>
+                                <input defaultValue={'skip'} type="text" name="deliveryTime" hidden={true} />
+                            </>
                         )
                     }
 

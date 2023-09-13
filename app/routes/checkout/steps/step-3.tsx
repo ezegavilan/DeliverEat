@@ -1,13 +1,13 @@
 import { redirect, type ActionArgs, type ActionFunction } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, type NavigateFunction, useActionData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { validateCashPaymentInput, validateCreditCardInput } from "~/validations/payment.server";
 
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
     const formData = await request.formData();
-    const cashAmount = formData.get('amount');
-
-    if (cashAmount) {
+    const cashAmount = formData.get('amount');    
+    
+    if (cashAmount || cashAmount === '') {        
         try {
             validateCashPaymentInput(cashAmount);
             return redirect('/success');
@@ -19,7 +19,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 
     try {
         const creditCardData = Object.fromEntries(formData);
-        console.log(creditCardData);
         validateCreditCardInput(creditCardData);
         return redirect('/success');
     } catch (error) {
@@ -29,6 +28,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 }
 
 export default function PayMethodStep({ total = 6000 }: any) {
+    const navigate: NavigateFunction = useNavigate();
     const validationErrors = useActionData();
     const [selected, setSelected] = useState('cash');
     const [amount, setAmount] = useState(0);
@@ -72,6 +72,11 @@ export default function PayMethodStep({ total = 6000 }: any) {
 
     const calculateExchange = (amount: number) => {
         return amount - total;
+    }
+
+    const handlePrev = (e: any) => {
+        e.preventDefault();
+        navigate('/checkout/steps/step-2');
     }
 
     return (
@@ -175,13 +180,25 @@ export default function PayMethodStep({ total = 6000 }: any) {
                 </div>
             </div>
 
-            {
-                <div className="mt-16 flex justify-end mx-3">
+            <div className="mt-16 flex justify-between">
+
+                <div className="mt-16 mx-3">
+                    <button className="cta sm" onClick={handlePrev}>
+                        Anterior
+                    </button>
+                </div>
+
+
+
+                <div className="mt-16 mx-3">
                     <button className="cta sm confirm" >
                         Confirmar Pedido
                     </button>
                 </div>
-            }
+
+            </div>
+
+
         </Form>
     )
 }

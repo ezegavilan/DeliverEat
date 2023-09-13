@@ -1,5 +1,5 @@
 import { redirect, type ActionArgs, type ActionFunction } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, type NavigateFunction, useActionData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { validateDeliveryTimeInput } from "~/validations/delivery.server";
 
@@ -22,11 +22,17 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 }
 
 export default function DeliveryTimeStepPage() {
+    const navigate: NavigateFunction = useNavigate();
     const validationErrors = useActionData();
     const [selected, setSelected] = useState('sooner');
 
     const handleSelectCard = (card: string) => {
         setSelected(card);
+    }
+
+    const handlePrev = (e: any) => {
+        e.preventDefault();
+        navigate('/checkout/steps/step-1');
     }
 
     return (
@@ -69,13 +75,21 @@ export default function DeliveryTimeStepPage() {
                 )
             }
 
-            {
+            <div className="mt-16 flex justify-between">
+
+                <div className="mt-16 mx-3">
+                    <button className="cta sm" onClick={handlePrev}>
+                        Anterior
+                    </button>
+                </div>
+
                 <div className="mt-16 flex justify-end">
                     <button className="cta sm" >
                         Siguiente
                     </button>
                 </div>
-            }
+
+            </div>
         </Form>
     )
 }

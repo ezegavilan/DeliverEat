@@ -7,7 +7,7 @@ type ValidationError = {
 
 function isValidAmount(value: string) {
     const amount: number = Number(value);
-    return (amount > 0 && amount <= 100000);
+    return (amount > 0 && amount <= 100000 && value !== '');
 }
 
 function isValidDifferenceAmount(value: string) {
@@ -38,8 +38,6 @@ function isValidCardNumber(value: string) {
 function isValidExpired(value: string) {
     const month: number = Number(value.split("/")[0]);
     const year: number = Number(value.split("/")[1]);
-    console.log(month);
-    console.log(year);
     return (month > 8 && year >= 23) && (year >= 23);
 }
 

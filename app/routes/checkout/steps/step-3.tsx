@@ -172,14 +172,13 @@ export default function PayMethodStep({ total = 6000 }: any) {
 
                     <div className="amount-info">
                         <span>
-                            <p>$ 6.000</p>
+                            <p>$ 3.500</p>
                         </span>
                     </div>
                 </div>
             </div>
 
             <div className="mt-16 flex justify-between">
-
                 <div className="mt-16 mx-3">
                     <button className="cta sm" onClick={handlePrev}>
                         Anterior
@@ -193,7 +192,6 @@ export default function PayMethodStep({ total = 6000 }: any) {
                         Confirmar Pedido
                     </button>
                 </div>
-
             </div>
 
 

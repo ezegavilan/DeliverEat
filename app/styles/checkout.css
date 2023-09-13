@@ -40,6 +40,17 @@ h1 {
     min-height: 84px;
 }
 
+.summary-item .price-remove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.summary-item .remove {
+    color: #fc3a3a;
+}
+
 .summary-item .item-description {
     display: flex;
     gap: 32px;
@@ -91,6 +102,30 @@ h1 {
 .cta.sm.confirm:active {
     background: var(--color-primary);
     color: var(--color-light);
+}
+
+.empty-items {
+    padding: 24px;
+    background: var(--color-primary);
+    color: var(--color-light);
+    border-radius: 6px;
+    width: 420px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+
+.empty-items h1 {
+    font-size: 18px;
+    color: var(--color-light);
+}
+
+.empty-items button {
+    margin-top: 52px;
+    background: var(--color-light);
+    color: var(--color-primary);
 }
 
 .location-container {

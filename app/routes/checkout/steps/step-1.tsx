@@ -1,5 +1,5 @@
 import { redirect, type ActionArgs, type ActionFunction } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, type NavigateFunction, useActionData, useNavigate } from "@remix-run/react";
 import { validateLocationInput } from "~/validations/location.server";
 
 
@@ -7,7 +7,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     const formData = await request.formData();
     const location = Object.fromEntries(formData);
 
-    try {        
+    try {
         validateLocationInput(location);
     } catch (error) {
         console.error(error);
@@ -18,7 +18,14 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 }
 
 export default function LocationStepPage() {
+    const navigate: NavigateFunction = useNavigate();
     const validationErrors = useActionData();
+
+    const handlePrev = (e: any) => {
+        e.preventDefault();
+        navigate('/checkout', { replace: false });
+        window.location.reload();
+    }
 
     return (
         <Form method="POST" className="mt-10 location">
@@ -63,11 +70,22 @@ export default function LocationStepPage() {
                 )
             }
 
-            {<div className="mt-16 flex justify-end">
-                <button className="cta sm" >
-                    Siguiente
-                </button>
-            </div>}
+            <div className="mt-16 flex justify-between">
+
+                <div className="mt-16 mx-3">
+                    <button className="cta sm" onClick={handlePrev}>
+                        Anterior
+                    </button>
+                </div>
+
+                <div className="mt-16 flex justify-end">
+                    <button className="cta sm" >
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+
+            { }
         </Form>
     )
 }

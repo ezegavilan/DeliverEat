@@ -32,7 +32,7 @@ export function validateCashPaymentInput(amount: any) {
 }
 
 function isValidCardNumber(value: string) {
-    return value.length === 16+3;
+    return value.length === 16+3 && value.startsWith("4");
 }
 
 function isValidExpired(value: string) {

@@ -13,7 +13,13 @@ function isValidStreetNumber(value: number) {
 }
 
 function isValidCity(value: string) {
-    const cities: string[] = ['Córdoba', 'Villa María', 'Río Cuarto'];
+    const cities: string[] = [
+    'Villa Carlos Paz',
+    'Santa Rosa de Calamuchita',
+    'Villa General Belgrano',
+    'Cosquin',
+    'Mina Clavero',
+    'Nono'];
     return cities.includes(value);
 }
 

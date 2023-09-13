@@ -31,6 +31,7 @@ export default function LocationStepPage() {
 
                 </div>
                 <select name="city" defaultValue={"default"} id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Seleccioná tu ciudad" required>
+                    <option value="default">Seleccioná tu ciudad</option>
                     <option value="Villa Carlos Paz">Villa Carlos Paz</option>
                     <option value="Santa Rosa de Calamuchita">Santa Rosa de Calamuchita</option>
                     <option value="Villa General Belgrano">Villa General Belgrano</option>
@@ -48,8 +49,6 @@ export default function LocationStepPage() {
 
             <div className="mt-5 columns-2">
                 <input type="text" id="ref" name="ref" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Referencia para cadete" />
-
-                <input type="text" id="depto" name="depto" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Depto" />
             </div>
 
             {

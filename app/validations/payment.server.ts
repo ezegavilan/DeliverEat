@@ -37,8 +37,11 @@ function isValidCardNumber(value: string) {
 
 function isValidExpired(value: string) {
     const month: number = Number(value.split("/")[0]);
-    const year: number = Number(value.split("/")[1]);
-    return (month > 8 && year >= 23) && (year >= 23);
+    const year: number = Number(value.split("/")[1]) + 2000;
+    if (month > 12 || month <= 0) return false;
+    const currentDate = new Date();
+    const vtoDate = new Date(year, month - 1, 1);    
+    return (currentDate.getTime() <= vtoDate.getTime());
 }
 
 export function validateCreditCardInput(input: any) {

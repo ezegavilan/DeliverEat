@@ -69,11 +69,13 @@ export default function DeliveryTimeStepPage() {
                 )
             }
 
-            {<div className="mt-16 flex justify-end">
-                <button className="cta sm" >
-                    Siguiente
-                </button>
-            </div>}
+            {
+                <div className="mt-16 flex justify-end">
+                    <button className="cta sm" >
+                        Siguiente
+                    </button>
+                </div>
+            }
         </Form>
     )
 }

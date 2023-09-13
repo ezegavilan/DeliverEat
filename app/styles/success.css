@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/lato/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Arvo';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/arvo/Arvo-Regular.ttf');
+}
+
+.confirmed {
+    margin: 36px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmed-card {
+    min-height: 220px;
+    min-width: 550px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    background: white;
+    color: var(--color-primary);
+
+    border-radius: 6px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Arvo', sans-serif;
+}
+
+.cta {
+    font-family: 'Arvo', sans-serif;
+    text-transform: uppercase;
+    padding: 12px;
+    font-size: 12px;
+    background: gray;
+    color: var(--color-light);
+    border-radius: 6px;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+}

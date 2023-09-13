@@ -82,6 +82,17 @@ h1 {
     padding: 12px;
 }
 
+.cta.sm.confirm {
+    background: var(--color-light);
+    color: var(--color-primary);
+}
+
+.cta.sm.confirm:hover,
+.cta.sm.confirm:active {
+    background: var(--color-primary);
+    color: var(--color-light);
+}
+
 .location-container {
     display: flex;
     justify-content: flex-start;
@@ -201,4 +212,23 @@ h1 {
 .payment-container .payment-amount .amount-info span p {
     font-size: 24px;
     font-weight: bold;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+    position: fixed;
+    top: 25vh;
+    width: 30rem;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--color-gray-50);
+    animation: fade-slide-down 0.5s ease-out forwards;
 }

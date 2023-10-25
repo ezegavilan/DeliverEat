@@ -27,7 +27,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     }
 }
 
-export default function PayMethodStep({ total = 6000 }: any) {
+export default function PayMethodStep({ total = 3500 }: any) {
     const navigate: NavigateFunction = useNavigate();
     const validationErrors = useActionData();
     const [selected, setSelected] = useState('cash');

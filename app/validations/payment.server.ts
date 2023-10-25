@@ -12,7 +12,7 @@ function isValidAmount(value: string) {
 
 function isValidDifferenceAmount(value: string) {
     const amount: number = Number(value);
-    return (amount >= 6000);
+    return (amount >= 3500);
 }
 
 export function validateCashPaymentInput(amount: any) {
